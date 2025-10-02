@@ -12,6 +12,11 @@ from langchain_core.messages import AnyMessage, SystemMessage, ToolMessage, AIMe
 # Import SMILES tools
 from src.services.smiles.descriptor_2d import Descriptors2DTool
 from src.services.smiles.smiles_standardize import SmilesStandardizeTool
+from src.services.data.csv_loader import CSVDataLoaderTool
+from src.services.advanced_cheminformatics.protonation_tool import ProtonationTool
+from src.services.advanced_cheminformatics.conformer_tool import ConformerTool
+from src.services.advanced_cheminformatics.sdf_export_tool import SDFExportTool
+from src.services.chembl import get_chembl_tools
 from src.utils.langchain_setup import chat_model
 from src.modules.prompts import SYSTEM_PROMPT
 
@@ -46,10 +51,16 @@ class Agent:
         self.model = chat_model.bind_tools(tools)
 
     def get_tools(self):
-        """Get SMILES-specific tools for drug discovery"""
+        """Get tools for drug discovery: SMILES processing + data loading"""
         tools = [
             SmilesStandardizeTool(),
             Descriptors2DTool(),
+            CSVDataLoaderTool(),
+            *get_chembl_tools(),
+             # Advanced cheminformatics tools
+            ProtonationTool(),
+            ConformerTool(),
+            SDFExportTool()
         ]
         return tools
 
