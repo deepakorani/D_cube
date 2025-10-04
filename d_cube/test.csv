@@ -1,0 +1,5 @@
+smiles,name,activity
+CCO,ethanol,0.5
+CC,methane,0.1
+c1ccccc1,benzene,0.8
+CC(=O)O,acetic_acid,0.3
