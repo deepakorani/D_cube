@@ -192,3 +192,5 @@ pyrightconfig.json
 .github
 .vscode
 
+
+.chembl_ws_client__0.10.9
